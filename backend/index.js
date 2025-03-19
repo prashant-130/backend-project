@@ -1,13 +1,32 @@
 const express= require('express')
+const cors= require('cors')
+require('./db/config')
+const User=require('./db/Users')
+const app=express()
+app.use(cors())
 
-app=express()
+app.use(express.json())
 
-app.get('/',(req,resp)=>
+// const connectDB = async()=>
+// {
+//   mongoose.connect('mongodb+srv://blurrystar007:gLDfK8RVM8NbbHb0@cluster0.tj8ae.mongodb.net/e-comm')
+
+//   const productSchema= new mongoose.Schema({})
+
+//   const product= mongoose.model('product',productSchema)
+
+//   const data= await product.find()
+//   console.log(data)
+// }
+// connectDB()
+
+app.post('/register',async(req,resp)=>
 {
-  resp.send("app is working")
+  let user =new User(req.body)
+  let result=await user.save()
+    resp.send(user)
 })
-
-app.listen(6000,()=>
+app.listen(5600,()=>
 {
     console.log('app is running')
 })
